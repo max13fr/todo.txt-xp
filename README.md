@@ -16,12 +16,14 @@ Forked from gr0undzer0/xp to several improvements :
 Installation: 
 -------------
 
- 1. Confirm the location of your todo actions directroy. The `TODO_ACTIONS_DIR` variable can be found in `todo.cfg`
- 2. Copy the XP add-on in the todo actions directory. 
+1) Confirm the location of your todo actions directroy. The `TODO_ACTIONS_DIR` variable can be found in `todo.cfg`
+2) Copy the XP add-on in the todo actions directory. 
 
-       ~/.todo.actions.d
-       wget https://raw.githubusercontent.com/max13fr/todo.txt-xp/stable/xp
-       chmod +x xp
+```
+~/.todo.actions.d
+wget https://raw.githubusercontent.com/max13fr/todo.txt-xp/stable/xp
+chmod +x xp
+```
 
 Usage: 
 ------
