@@ -8,9 +8,9 @@ XP - A todo.txt module designed to print a readable guide of your accomplishment
 Forked from gr0undzer0/xp to several improvements :
 * search in `$TODO_FILE` and `$DONE_FILE` (originaly, only in `$DONE_FILE`)
 * improve display :
-** remove file path & complete time from result lines
-** move creation date to the end
-** add color for context, project and creation date
+ * remove file path & complete time from result lines
+ * move creation date to the end
+ * add color for context, project and creation date
 * clean code (matching regex, indendation, duplication, ...)
 
 Installation: 
