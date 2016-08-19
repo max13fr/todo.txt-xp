@@ -1,6 +1,6 @@
 #!/bin/bash
-# 2013 Chris Jones  christopher.donald.jones@gmail.com 
-#github: https://github.com/gr0undzer0/xp
+# 2013 Chris Jones christopher.donald.jones@gmail.com  https://github.com/gr0undzer0/xp
+# 2016 max13fr https://github.com/max13fr/todo.txt-xp
 # License: GPL, http://www.gnu.org/copyleft/gpl.html
 
 re='^[0-9]+$'
@@ -48,30 +48,52 @@ WEEK=604800
 DAY=$(($WEEK / 7))
 for i in $(eval echo "{$DAYS..0}")
 do
-DAYX=$(($TODAY - $DAY * $i))
-case $OSTYPE in
-  darwin*)
-    DAYTITLE=$(date -r $DAYX +%Y-%m-%d\ )
-    DAYWORD=$(date  -r $DAYX +%A)
-    ;;
-  *)
-    DAYTITLE=$(gnudate -d "@"$DAYX +%Y-%m-%d\ )
-    DAYWORD=$(gnudate -d $DAYTITLE +%A)
-    ;;
-esac
-DAYCONTENT=$(grep "x $DAYTITLE" $DONE_FILE)
+  DAYX=$(($TODAY - $DAY * $i))
+  case $OSTYPE in
+    darwin*)
+      DAYTITLE=$(date -r $DAYX +%Y-%m-%d\ )
+      DAYWORD=$(date  -r $DAYX +%A)
+      ;;
+    *)
+      DAYTITLE=$(gnudate -d "@"$DAYX +%Y-%m-%d\ )
+      DAYWORD=$(gnudate -d $DAYTITLE +%A)
+      ;;
+  esac
 
-if [[ -z "$DAYCONTENT" && "$OPTION" != -o  ]]
-then
-echo "=========================="
-echo "$DAYWORD" ":" "$DAYTITLE"
-echo "=========================="
-echo  "$DAYCONTENT"
-elif [[ ! -z "$DAYCONTENT" ]]
-then
-echo "=========================="
-echo "$DAYWORD" ":" "$DAYTITLE"
-echo "=========================="
-echo  "$DAYCONTENT"
-fi;
+  # match only current day
+  DAYCONTENT=$(grep -Eh "^x $DAYTITLE" $TODO_FILE $DONE_FILE)
+
+  #
+  # clean display
+  #
+
+  # remove complete date
+  #DAYCONTENT=$(echo "$DAYCONTENT" | perl -pe 's/^x (\d{4}-\d{2}-\d{2} )?/- /') 
+  DAYCONTENT=$(echo "$DAYCONTENT" | sed -r 's/^x [0-9]{4}-[0-9]{2}-[0-9]{2}/-/') 
+  
+  # move creation time at the end
+  #DAYCONTENT=$(echo "$DAYCONTENT" | perl -pe 's/^- (\d{4}-\d{2}-\d{2}) (.+)$/- \2 \1/')  
+  DAYCONTENT=$(echo "$DAYCONTENT" | sed -r 's/^- ([0-9]{4}-[0-9]{2}-[0-9]{2}) (.+)$/- \2 (creation: \1)/')  
+
+  #
+  # add color
+  #
+
+  # complete date
+  DAYCONTENT=$(echo "$DAYCONTENT" | perl -pe 's#(\(creation: \d{4}-\d{2}-\d{2}\))$#\033\[90m\1\033\[0m#') # start date
+
+  # context (@)
+  DAYCONTENT=$(echo "$DAYCONTENT" | perl -pe 's# (@\S+)# \033\[38;5;35m\1\033\[0m#g') # start date
+
+  # project (+)
+  DAYCONTENT=$(echo "$DAYCONTENT" | perl -pe 's# (\+\S+)# \033\[38;5;38m\1\033\[0m#g') # start date
+
+  if [[ (-z "$DAYCONTENT" && "$OPTION" != -o) || ! -z "$DAYCONTENT"  ]]
+  then
+    echo "=========================="
+    echo "$DAYWORD" ":" "$DAYTITLE"
+    echo "=========================="
+    echo  "$DAYCONTENT"
+    echo
+  fi;
 done
