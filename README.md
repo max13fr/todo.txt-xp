@@ -33,14 +33,3 @@ Usage:
               o : Omit days on which no tasks were commited.
               h : Print this help message.
 
-Notes: 
------
-
-If You experience bad interpreter errors:
-Please check for the location of bash. I test on fedora where everything has been moved to `/usr/bin`.
-
-Contact:
---------
-
-   * **xp**: christopher.donald.jones@gmail.com or https://github.com/gr0undzer0/xp
-   * **todo.txt**: http://blog.todotxt.com/ or https://github.com/ginatrapani/todo.txt-cli 
