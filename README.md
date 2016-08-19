@@ -3,8 +3,6 @@ xp
 
 XP - A todo.txt module designed to print a readable guide of your accomplishments. 
 
- Currently XP prints the tasks completed on each day starting (x) number of days ago. 
- 
 Forked from gr0undzer0/xp to add several improvements :
 * search in `$TODO_FILE` and `$DONE_FILE` (originaly, only in `$DONE_FILE`)
 * improve display :
