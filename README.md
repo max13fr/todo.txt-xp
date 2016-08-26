@@ -18,7 +18,7 @@ Installation:
 2) Copy the XP add-on in the todo actions directory. 
 
 ```
-~/.todo.actions.d
+cd ~/.todo.actions.d
 wget https://raw.githubusercontent.com/max13fr/todo.txt-xp/stable/xp
 chmod +x xp
 ```
